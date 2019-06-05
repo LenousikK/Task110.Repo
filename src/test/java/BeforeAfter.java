@@ -11,12 +11,19 @@ import java.net.URL;
 public class BeforeAfter {
     protected WebDriver driver;
     protected WebDriverWait wait;
-    public static final String URL_TO_HUB = "http://localhost:4444/wd/hub";
+    public static final String USERNAME = "YOUR_USERNAME";
+    public static final String ACCESS_KEY = "YOUR_ACCESS_KEY";
+    public static final String URL_TO_SAUCELABS = "https://" + USERNAME + ":" + ACCESS_KEY + "@ondemand.saucelabs.com:443/wd/hub";
 
     @BeforeEach
     public void openBrowser() throws MalformedURLException {
-        DesiredCapabilities capability = DesiredCapabilities.chrome();
-        driver = new RemoteWebDriver(new URL(URL_TO_HUB), capability);
+        DesiredCapabilities caps = new DesiredCapabilities();
+        caps.setCapability("browser", "Edge");
+        caps.setCapability("browser_version", "18.0");
+        caps.setCapability("os", "Windows");
+        caps.setCapability("os_version", "10");
+        caps.setCapability("resolution", "1024x768");
+        driver = new RemoteWebDriver(new URL(URL_TO_SAUCELABS), caps);
         wait = new WebDriverWait(driver, 30);
     }
 
